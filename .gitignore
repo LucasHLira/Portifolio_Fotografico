@@ -1,0 +1,25 @@
+# Arquivos que nunca devem ir para o Git
+
+# Variáveis de ambiente com segredos
+.env
+.env.local
+.env.production
+
+# Dependências
+node_modules/
+
+# Builds do Next.js
+.next/
+out/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
