@@ -1,78 +1,101 @@
-# Portfólio Fotográfico Kauã
+# Portfólio Fotográfico - Kauã
 
-Plataforma de portfólio fotográfico com frontend público (Next.js) e painel administrativo privado.
+Um portfólio fotográfico completo e dinâmico, composto por um frontend moderno em Next.js e uma API robusta em Node.js. Este sistema permite a exibição de galerias de fotos organizadas por álbuns, contato direto com clientes e um painel de administração completo para gerenciamento de conteúdo.
 
-## Estrutura do Projeto
-
-```
-Portifolio_Kaua/
-├── backend/   # Node.js + Express + PostgreSQL
-└── frontend/  # Next.js 14
-```
-
-## Instalação e Desenvolvimento
-
-### Backend
-```bash
-cd backend
-cp .env.example .env    # Configure as variáveis de ambiente
-npm install
-npm run dev             # Inicia em http://localhost:3001
-```
+## 🚀 Tecnologias Utilizadas
 
 ### Frontend
-```bash
-cd frontend
-cp .env.example .env.local   # Configure as variáveis de ambiente
-npm install
-npm run dev                  # Inicia em http://localhost:3000
-```
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Biblioteca UI:** [React 18](https://react.dev/)
+- **Galerias de Imagens:** [yet-another-react-lightbox](https://yet-another-react-lightbox.com/) e [react-masonry-css](https://www.npmjs.com/package/react-masonry-css)
+- **Drag and Drop (Painel Admin):** [@dnd-kit/core](https://dndkit.com/)
+- **Requisições HTTP:** Axios
+- **Notificações:** React Hot Toast
 
-## Configuração Inicial (FAÇA ISSO ANTES DE USAR)
+### Backend
+- **Ambiente:** [Node.js](https://nodejs.org/) com [Express](https://expressjs.com/)
+- **Banco de Dados:** PostgreSQL (via pacote `pg`) hospedado no [Neon](https://neon.tech/)
+- **Armazenamento de Imagens:** [Cloudinary](https://cloudinary.com/)
+- **Autenticação:** JWT (JSON Web Tokens) e Bcryptjs
+- **Upload de Arquivos:** Multer
+- **Envio de E-mails:** Nodemailer
+- **Segurança:** Helmet e Express Rate Limit
 
-### 1. Configure o banco de dados
-Crie um banco PostgreSQL no Railway e adicione `DATABASE_URL` no `.env` do backend.
+---
 
-### 2. Execute a migration
-```bash
-cd backend
-node -e "require('./src/config/database.js').runMigration()"
-```
+## 📁 Estrutura do Projeto
 
-### 3. Crie o admin inicial
-Adicione `ADMIN_SETUP_SECRET` ao `.env`, então faça uma requisição POST:
-```bash
-curl -X POST http://localhost:3001/api/auth/criar-admin \
-  -H "Content-Type: application/json" \
-  -d '{"email":"seu@email.com","senha":"suaSenha","segredo":"ADMIN_SETUP_SECRET"}'
-```
-> ⚠️ **IMPORTANTE**: Após criar o admin, remova a rota `/criar-admin` de `routes/auth.js` antes de ir para produção!
+O repositório está dividido em duas partes principais (Monorepo):
 
-### 4. Configure o Cloudinary
-Crie uma conta em cloudinary.com e adicione as credenciais ao `.env`.
+- `/frontend`: Contém a interface visual pública (Home, Galeria, Contato) e o Painel de Administração (`/admin`).
+- `/backend`: Contém a API RESTful que gerencia o banco de dados, upload de imagens e envio de e-mails.
 
-## Deploy
+---
 
-### Backend (Railway)
-1. Conecte o repositório ao Railway
-2. Configure as variáveis de ambiente no painel do Railway
-3. O Railway detecta automaticamente Node.js e usa `npm start`
+## 🛠️ Como rodar o projeto localmente
 
-### Frontend (Vercel)
-1. Conecte o repositório à Vercel
-2. Configure `NEXT_PUBLIC_API_URL` com a URL do backend no Railway
-3. Configure `REVALIDATE_SECRET` igual ao do backend
+### Pré-requisitos
+- Node.js (v18 ou superior)
+- PostgreSQL local ou remoto (como o Neon.tech)
+- Conta no Cloudinary
 
-## Rotas do Admin
+### 1. Configurando o Backend
 
-- Login: `/admin/login`
-- Álbuns: `/admin/albuns`
-- Upload de Fotos: `/admin/fotos`
-- Mensagens: `/admin/mensagens`
+1. Entre na pasta do backend:
+   ```bash
+   cd backend
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Crie um arquivo `.env` na pasta `backend` baseando-se no arquivo `.env.example`:
+   ```bash
+   cp .env.example .env
+   ```
+   *Preencha as informações do banco de dados (DATABASE_URL), chaves do Cloudinary, credenciais de e-mail e crie um JWT_SECRET seguro.*
+4. Rode as migrações para criar as tabelas no banco de dados:
+   ```bash
+   npm run migrate
+   ```
+5. Inicie o servidor:
+   ```bash
+   npm run dev
+   ```
+   *O backend rodará por padrão em `http://localhost:3001`.*
 
-## Tecnologias
+### 2. Configurando o Frontend
 
-- **Frontend**: Next.js 14, React 18, react-masonry-css, yet-another-react-lightbox
-- **Backend**: Node.js, Express, PostgreSQL (pg), Multer, Cloudinary SDK, JWT
-- **Deploy**: Vercel (frontend) + Railway (backend + banco)
-- **Imagens**: Cloudinary (otimização automática, WebP, lazy loading)
+1. Entre na pasta do frontend:
+   ```bash
+   cd ../frontend
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Crie um arquivo `.env.local` na pasta `frontend` e adicione a URL da sua API (caso necessário, verifique a porta que o backend está rodando):
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:3001
+   ```
+4. Inicie o servidor frontend:
+   ```bash
+   npm run dev
+   ```
+   *O frontend rodará por padrão em `http://localhost:3000`.*
+
+---
+
+## 🌐 Hospedagem / Deploy
+
+Recomendamos a seguinte arquitetura gratuita e eficiente:
+1. **Frontend:** [Vercel](https://vercel.com/) (Suporte nativo a Next.js)
+2. **Backend:** [Render](https://render.com/) (Web Service Node.js)
+3. **Banco de Dados:** [Neon.tech](https://neon.tech/) ou Supabase (PostgreSQL)
+
+*(Lembre-se de configurar as variáveis de ambiente em ambos os serviços na nuvem conforme os seus arquivos `.env` locais).*
+
+## 🔒 Painel de Administração
+
+O acesso ao painel de administração é feito através da rota `/admin`.
+Nele, o administrador pode criar novos álbuns, fazer upload de novas fotografias, reorganizar a ordem de exibição e gerenciar o conteúdo do site em tempo real.
