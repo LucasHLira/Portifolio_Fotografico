@@ -174,7 +174,6 @@ async function triggerRevalidation(slug) {
   if (!frontendUrl || !revalidateSecret) return;
 
   try {
-    const fetch = (await import('node-fetch')).default;
     await fetch(`${frontendUrl}/api/revalidate?slug=${slug}&secret=${revalidateSecret}`);
   } catch (err) {
     // Falha silenciosa — não impede o upload
