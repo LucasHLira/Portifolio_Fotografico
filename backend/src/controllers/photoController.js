@@ -17,7 +17,7 @@ async function uploadFotos(req, res) {
   }
 
   // Verifica se o álbum existe
-  const albumResult = await query('SELECT id, titulo FROM albums WHERE id = $1', [album_id]);
+  const albumResult = await query('SELECT id, titulo, slug FROM albums WHERE id = $1', [album_id]);
   if (albumResult.rows.length === 0) {
     return res.status(404).json({ success: false, error: 'Álbum não encontrado.' });
   }
@@ -32,7 +32,7 @@ async function uploadFotos(req, res) {
   );
   let proximaOrdem = (ordemResult.rows[0].max_ordem || 0) + 1;
 
-  const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-kaua'}/${album.titulo.toLowerCase().replace(/\s+/g, '-')}`;
+  const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-kaua'}/${album.slug}`;
 
   // Faz upload de todos os arquivos em paralelo
   const uploads = await Promise.allSettled(
