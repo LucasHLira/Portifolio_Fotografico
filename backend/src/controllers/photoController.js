@@ -55,6 +55,13 @@ async function uploadFotos(req, res) {
   const sucesso = uploads.filter((u) => u.status === 'fulfilled').map((u) => u.value);
   const erros = uploads.filter((u) => u.status === 'rejected').map((u) => u.reason?.message);
 
+  if (sucesso.length === 0) {
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Falha ao fazer upload das fotos: ' + (erros[0] || 'Erro desconhecido no Cloudinary.') 
+    });
+  }
+
   // Se o álbum não tem capa ainda, usa a primeira foto como capa
   if (sucesso.length > 0) {
     const albumSemCapa = await query('SELECT id FROM albums WHERE id = $1 AND capa_url IS NULL', [album_id]);
