@@ -2,6 +2,7 @@
 
 import Navbar from '@/components/public/Navbar';
 import AlbumCard from '@/components/public/AlbumCard';
+import { Camera } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
@@ -79,7 +80,9 @@ export default async function GaleriaPage({ searchParams }) {
               </div>
             ) : (
               <div style={{ textAlign: 'center', padding: '5rem 0', color: 'var(--text-secondary)' }}>
-                <p style={{ fontSize: '3rem', marginBottom: '1rem' }}>📷</p>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+                  <Camera size={48} strokeWidth={1.5} />
+                </div>
                 <p>Nenhum álbum encontrado nessa categoria.</p>
               </div>
             )}

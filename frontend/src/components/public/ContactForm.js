@@ -40,7 +40,7 @@ export default function ContactForm() {
     try {
       await mensagensApi.enviar(form);
       setEnviado(true);
-      toast.success('Mensagem enviada! Retornarei em breve. 📸');
+      toast.success('Mensagem enviada! Retornarei em breve.');
     } catch (err) {
       toast.error(err?.error || 'Erro ao enviar. Tente pelo WhatsApp.');
     } finally {

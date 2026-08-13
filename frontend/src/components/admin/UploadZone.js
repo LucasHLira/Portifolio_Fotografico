@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { fotosApi } from '@/lib/api';
 import toast from 'react-hot-toast';
+import { FolderUp, Upload } from 'lucide-react';
 
 export default function UploadZone({ albumId, onUploadComplete }) {
   const [uploading, setUploading] = useState(false);
@@ -45,7 +46,7 @@ export default function UploadZone({ albumId, onUploadComplete }) {
 
     try {
       await fotosApi.upload(formData, (prog) => setProgress(prog));
-      toast.success(`${previews.length} foto(s) enviada(s) com sucesso! 🎉`);
+      toast.success(`${previews.length} foto(s) enviada(s) com sucesso!`);
       previews.forEach((p) => URL.revokeObjectURL(p.preview));
       setPreviews([]);
       onUploadComplete?.();
@@ -63,7 +64,9 @@ export default function UploadZone({ albumId, onUploadComplete }) {
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
         <input {...getInputProps()} id="upload-input" />
         <div style={{ pointerEvents: 'none' }}>
-          <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>📁</div>
+          <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+            <FolderUp size={48} color="var(--text-secondary)" strokeWidth={1.5} />
+          </div>
           {isDragActive ? (
             <p style={{ color: 'var(--cyan)', fontWeight: 500 }}>Solte as fotos aqui!</p>
           ) : (
@@ -119,9 +122,13 @@ export default function UploadZone({ albumId, onUploadComplete }) {
             className="btn btn-primary"
             onClick={handleUpload}
             disabled={uploading}
-            style={{ marginTop: '1.25rem', width: '100%', justifyContent: 'center' }}
+            style={{ marginTop: '1.25rem', width: '100%', display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center' }}
           >
-            {uploading ? `Enviando ${progress}%...` : `⬆️ Enviar ${previews.length} foto${previews.length !== 1 ? 's' : ''}`}
+            {uploading ? `Enviando ${progress}%...` : (
+              <>
+                <Upload size={16} /> Enviar {previews.length} foto{previews.length !== 1 ? 's' : ''}
+              </>
+            )}
           </button>
         </div>
       )}

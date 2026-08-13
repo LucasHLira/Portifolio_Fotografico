@@ -3,11 +3,15 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { Camera, Heart, User, Leaf } from 'lucide-react';
 
-const categoriaEmoji = {
-  'Casamentos': '💍',
-  'Ensaios':    '✨',
-  'Natureza':   '🌿',
+const CategoriaIcon = ({ categoria }) => {
+  switch (categoria) {
+    case 'Casamentos': return <Heart size={14} />;
+    case 'Ensaios': return <User size={14} />;
+    case 'Natureza': return <Leaf size={14} />;
+    default: return <Camera size={14} />;
+  }
 };
 
 export default function AlbumCard({ album }) {
@@ -24,7 +28,7 @@ export default function AlbumCard({ album }) {
           />
         ) : (
           <div className="album-thumb-placeholder">
-            <span style={{ fontSize: '3rem' }}>📷</span>
+            <Camera size={48} color="var(--text-secondary)" />
           </div>
         )}
         <div className="album-overlay" />
@@ -33,7 +37,7 @@ export default function AlbumCard({ album }) {
       <div className="album-info">
         {album.categoria && (
           <span className="album-categoria">
-            {categoriaEmoji[album.categoria] || '📸'} {album.categoria}
+            <CategoriaIcon categoria={album.categoria} /> {album.categoria}
           </span>
         )}
         <h3 className="album-titulo">{album.titulo}</h3>
@@ -106,7 +110,9 @@ export default function AlbumCard({ album }) {
         }
 
         .album-categoria {
-          display: inline-block;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.3rem;
           font-size: 0.72rem;
           font-weight: 600;
           letter-spacing: 0.08em;

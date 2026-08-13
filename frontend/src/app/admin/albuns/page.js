@@ -8,59 +8,12 @@ import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import AdminLayout from '@/components/admin/AdminLayout';
+import { FolderOpen, Camera, Images, Edit2, Trash2 } from 'lucide-react';
 
 const CATEGORIAS = ['Casamentos', 'Ensaios', 'Natureza', 'Outro'];
 
-function SidebarAdmin({ ativo }) {
-  const router = useRouter();
-  const logout = () => { encerrarSessao(); router.replace('/admin/login'); };
 
-  return (
-    <aside className="admin-sidebar">
-      <div className="admin-sidebar-logo">
-        Kauã<span>.</span> <small>Admin</small>
-      </div>
-      <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-        <Link href="/admin/albuns" className={`admin-sidebar-link ${ativo === 'albuns' ? 'active' : ''}`}>
-          🗂️ Álbuns
-        </Link>
-        <Link href="/admin/fotos" className={`admin-sidebar-link ${ativo === 'fotos' ? 'active' : ''}`}>
-          🖼️ Upload de Fotos
-        </Link>
-        <Link href="/admin/mensagens" className={`admin-sidebar-link ${ativo === 'mensagens' ? 'active' : ''}`}>
-          ✉️ Mensagens
-        </Link>
-      </nav>
-      <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-        <a href="/" target="_blank" className="admin-sidebar-link" rel="noopener noreferrer">
-          🌐 Ver site
-        </a>
-        <button onClick={logout} className="admin-sidebar-link" style={{ width: '100%', background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', color: 'var(--text-secondary)' }}>
-          🚪 Sair
-        </button>
-      </div>
-      <style jsx>{`
-        .admin-sidebar-logo {
-          font-family: var(--font-display);
-          font-size: 1.3rem;
-          font-weight: 700;
-          padding: 0 0.75rem 1.5rem;
-          color: var(--text-primary);
-        }
-        .admin-sidebar-logo span { color: var(--cyan); }
-        .admin-sidebar-logo small {
-          display: block;
-          font-size: 0.65rem;
-          font-family: var(--font-body);
-          font-weight: 600;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: var(--text-muted);
-        }
-      `}</style>
-    </aside>
-  );
-}
 
 function ModalAlbum({ album, onClose, onSave }) {
   const [form, setForm] = useState({
@@ -173,57 +126,56 @@ export default function AlbunsPage() {
 
   return (
     <ProtectedRoute>
-      <div className="admin-layout">
-        <SidebarAdmin ativo="albuns" />
-        <div className="admin-content">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-            <div>
-              <h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Álbuns</h1>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{albums.length} álbum{albums.length !== 1 ? 's' : ''} cadastrado{albums.length !== 1 ? 's' : ''}</p>
-            </div>
-            <button className="btn btn-primary" onClick={() => setModal({})}>+ Novo Álbum</button>
+      <AdminLayout ativo="albuns">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+          <div>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Álbuns</h1>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{albums.length} álbum{albums.length !== 1 ? 's' : ''} cadastrado{albums.length !== 1 ? 's' : ''}</p>
           </div>
+          <button className="btn btn-primary" onClick={() => setModal({})}>+ Novo Álbum</button>
+        </div>
 
-          {loading ? (
-            <div style={{ display: 'grid', gap: '1rem' }}>
-              {[1,2,3].map((i) => <div key={i} className="skeleton" style={{ height: 72, borderRadius: 10 }} />)}
+        {loading ? (
+          <div style={{ display: 'grid', gap: '1rem' }}>
+            {[1,2,3].map((i) => <div key={i} className="skeleton" style={{ height: 72, borderRadius: 10 }} />)}
+          </div>
+        ) : albums.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+              <FolderOpen size={48} strokeWidth={1.5} />
             </div>
-          ) : albums.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-secondary)' }}>
-              <p style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>🗂️</p>
-              <p>Nenhum álbum criado. Comece agora!</p>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {albums.map((album) => (
-                <div key={album.id} className="card album-row">
-                  <div className="album-row-info">
-                    <div className="album-row-thumb">
-                      {album.capa_thumb
-                        ? <img src={album.capa_thumb} alt={album.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        : <span style={{ fontSize: '1.5rem' }}>📷</span>
-                      }
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 600, marginBottom: '0.15rem' }}>{album.titulo}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                        {album.categoria && <span style={{ color: 'var(--cyan)', marginRight: '0.75rem' }}>{album.categoria}</span>}
-                        {album.total_fotos} foto{album.total_fotos !== 1 ? 's' : ''}
-                        {!album.publicado && <span style={{ marginLeft: '0.75rem', color: 'var(--text-muted)' }}>· Oculto</span>}
-                      </div>
-                    </div>
+            <p>Nenhum álbum criado. Comece agora!</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {albums.map((album) => (
+              <div key={album.id} className="card album-row">
+                <div className="album-row-info">
+                  <div className="album-row-thumb">
+                    {album.capa_thumb
+                      ? <img src={album.capa_thumb} alt={album.titulo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      : <Camera size={24} color="var(--text-secondary)" />
+                    }
                   </div>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <Link href={`/admin/fotos?album=${album.id}`} className="btn btn-ghost" style={{ fontSize: '0.82rem' }}>⬆️ Fotos</Link>
-                    <button className="btn btn-ghost" style={{ fontSize: '0.82rem' }} onClick={() => setModal(album)}>✏️ Editar</button>
-                    <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: '#ff4444' }} onClick={() => excluir(album)}>🗑️</button>
+                  <div>
+                    <div style={{ fontWeight: 600, marginBottom: '0.15rem' }}>{album.titulo}</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                      {album.categoria && <span style={{ color: 'var(--cyan)', marginRight: '0.75rem' }}>{album.categoria}</span>}
+                      {album.total_fotos} foto{album.total_fotos !== 1 ? 's' : ''}
+                      {!album.publicado && <span style={{ marginLeft: '0.75rem', color: 'var(--text-muted)' }}>· Oculto</span>}
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Link href={`/admin/fotos?album=${album.id}`} className="btn btn-ghost" style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}><Images size={14} /> Fotos</Link>
+                  <button className="btn btn-ghost" style={{ fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }} onClick={() => setModal(album)}><Edit2 size={14} /> Editar</button>
+                  <button className="btn btn-ghost" style={{ fontSize: '0.82rem', color: '#ff4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => excluir(album)} aria-label="Excluir"><Trash2 size={16} /></button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </AdminLayout>
 
       {modal !== null && (
         <ModalAlbum
