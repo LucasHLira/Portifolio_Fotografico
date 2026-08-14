@@ -92,7 +92,7 @@ async function criarAlbum(req, res) {
   // Upload da foto de capa, se enviada
   if (req.file) {
     try {
-      const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-kaua'}/capas`;
+      const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-lumina'}/capas`;
       const resultado = await uploadStream(req.file.buffer, folder);
       capaUrl = resultado.secure_url;
       capaThumb = generateThumbnailUrl(resultado.secure_url, 600);
@@ -135,7 +135,7 @@ async function editarAlbum(req, res) {
         await deleteImage(albumAtual.rows[0].capa_cloudinary_id);
       }
 
-      const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-kaua'}/capas`;
+      const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-lumina'}/capas`;
       const resultado = await uploadStream(req.file.buffer, folder);
       capaUrl = resultado.secure_url;
       capaThumb = generateThumbnailUrl(resultado.secure_url, 600);

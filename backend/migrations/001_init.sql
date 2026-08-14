@@ -1,5 +1,5 @@
 -- ============================================================
--- Schema inicial — Portfólio Fotográfico Kauã
+-- Schema inicial — Portfólio Fotográfico Lumina
 -- Execute no Railway via psql ou no painel de query
 -- ============================================================
 

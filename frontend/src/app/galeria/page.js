@@ -8,10 +8,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
 export const metadata = {
   title: 'Galeria de Fotografias',
-  description: 'Explore a galeria completa de Kauã Fotografia: casamentos, ensaios e natureza em alta qualidade.',
+  description: 'Explore a galeria completa de Lumina Fotografia: casamentos, ensaios e natureza em alta qualidade.',
   openGraph: {
-    title: 'Galeria — Kauã Fotografia',
-    description: 'Explore todos os álbuns de Kauã Fotografia.',
+    title: 'Galeria — Lumina Fotografia',
+    description: 'Explore todos os álbuns de Lumina Fotografia.',
   },
 };
 

@@ -30,9 +30,9 @@ export async function generateMetadata({ params }) {
     const { data: album } = await res.json();
     return {
       title: album.titulo,
-      description: album.descricao || `Álbum de ${album.categoria || 'fotografia'} por Kauã Fotografia.`,
+      description: album.descricao || `Álbum de ${album.categoria || 'fotografia'} por Lumina Fotografia.`,
       openGraph: {
-        title: `${album.titulo} — Kauã Fotografia`,
+        title: `${album.titulo} — Lumina Fotografia`,
         description: album.descricao,
         images: album.capa_url ? [{ url: album.capa_url, alt: album.titulo }] : [],
         type: 'article',

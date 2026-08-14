@@ -9,7 +9,7 @@ export const metadata = {
   title: 'Contato e Orçamento',
   description: 'Entre em contato para solicitar orçamento de fotografia de casamentos, ensaios e mais. Resposta rápida via e-mail ou WhatsApp.',
   openGraph: {
-    title: 'Contato — Kauã Fotografia',
+    title: 'Contato — Lumina Fotografia',
     description: 'Solicite um orçamento personalizado para sua sessão fotográfica.',
   },
 };

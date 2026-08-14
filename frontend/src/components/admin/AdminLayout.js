@@ -50,7 +50,7 @@ export default function AdminLayout({ children, ativo }) {
           </svg>
         </button>
         <div className="admin-logo-mobile">
-          Kauã<span>.</span> <small>Admin</small>
+          Lumina<span>.</span> <small>Admin</small>
         </div>
       </header>
 
@@ -61,7 +61,7 @@ export default function AdminLayout({ children, ativo }) {
       <aside className={`admin-sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-header">
           <div className="admin-sidebar-logo">
-            Kauã<span>.</span> <small>Admin</small>
+            Lumina<span>.</span> <small>Admin</small>
           </div>
           <button className="close-btn" onClick={toggleSidebar} aria-label="Fechar menu">
             ✕

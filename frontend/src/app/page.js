@@ -9,10 +9,10 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
 // Metadata da página (SEO)
 export const metadata = {
-  title: 'Kauã Fotografia — Fotógrafo Profissional',
+  title: 'Lumina Fotografia — Fotógrafo Profissional',
   description: 'Portfólio de fotografia profissional especializado em casamentos, ensaios e natureza. Imagens que contam sua história.',
   openGraph: {
-    title: 'Kauã Fotografia',
+    title: 'Lumina Fotografia',
     description: 'Fotógrafo profissional especializado em casamentos, ensaios e natureza.',
     images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
@@ -107,7 +107,7 @@ export default async function HomePage() {
       {/* Footer */}
       <footer className="site-footer">
         <div className="container">
-          <p>© {new Date().getFullYear()} Kauã Fotografia. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} Lumina Fotografia. Todos os direitos reservados.</p>
           <p style={{ marginTop: '0.25rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
             Feito com ❤️ e muita luz natural
           </p>

@@ -4,7 +4,7 @@
 import '../styles/globals.css';
 import { Toaster } from 'react-hot-toast';
 
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Kauã Fotografia';
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Lumina Fotografia';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),

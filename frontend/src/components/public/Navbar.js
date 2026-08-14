@@ -32,7 +32,7 @@ export default function Navbar() {
     >
       <div className="container navbar-inner">
         <Link href="/" className="navbar-logo" aria-label="Ir para página inicial">
-          Kauã<span>.</span>
+          Lumina<span>.</span>
         </Link>
 
         <ul className="navbar-links" role="list">

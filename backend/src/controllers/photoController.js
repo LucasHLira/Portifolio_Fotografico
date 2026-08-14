@@ -32,7 +32,7 @@ async function uploadFotos(req, res) {
   );
   let proximaOrdem = (ordemResult.rows[0].max_ordem || 0) + 1;
 
-  const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-kaua'}/${album.slug}`;
+  const folder = `${process.env.CLOUDINARY_FOLDER || 'portfolio-lumina'}/${album.slug}`;
 
   // Faz upload de todos os arquivos em paralelo
   const uploads = await Promise.allSettled(

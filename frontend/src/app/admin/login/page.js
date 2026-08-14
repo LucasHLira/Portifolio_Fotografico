@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
     <main className="login-page">
       <div className="login-card card">
         <div className="login-logo">
-          Kauã<span>.</span>
+          Lumina<span>.</span>
           <small>Admin</small>
         </div>
         <h1 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>

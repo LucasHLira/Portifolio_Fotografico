@@ -16,14 +16,14 @@ cloudinary.config({
  * usando stream — sem salvar em disco
  *
  * @param {Buffer} buffer - O arquivo como buffer (vem do Multer)
- * @param {string} folder - Subpasta no Cloudinary (ex: 'portfolio-kaua/casamentos')
+ * @param {string} folder - Subpasta no Cloudinary (ex: 'portfolio-lumina/casamentos')
  * @param {string} [publicId] - ID público opcional (gerado automaticamente se omitido)
  * @returns {Promise<object>} Resultado do upload com urls e public_id
  */
 function uploadStream(buffer, folder, publicId = null) {
   return new Promise((resolve, reject) => {
     const options = {
-      folder: folder || process.env.CLOUDINARY_FOLDER || 'portfolio-kaua',
+      folder: folder || process.env.CLOUDINARY_FOLDER || 'portfolio-lumina',
       // Otimizações automáticas:
       quality: 'auto:good',        // qualidade ótima com menor tamanho
       fetch_format: 'auto',        // entrega WebP/AVIF para browsers modernos

@@ -119,7 +119,7 @@ async function enviarEmail(nome, email, telefone, tipo_servico, mensagem) {
   }
 
   await transporter.sendMail({
-    from: `"Portfólio Kauã" <${process.env.EMAIL_USER}>`,
+    from: `"Portfólio Lumina" <${process.env.EMAIL_USER}>`,
     to: process.env.EMAIL_TO || process.env.EMAIL_USER,
     replyTo: email,
     subject: `📸 Novo contato de ${nome}${tipo_servico ? ` — ${tipo_servico}` : ''}`,
