@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const { login } = require('../controllers/authController');
 
 // Rate limit específico para login: máximo 5 tentativas por 15 minutos
