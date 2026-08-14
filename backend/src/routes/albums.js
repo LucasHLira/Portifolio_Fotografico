@@ -12,6 +12,7 @@ const {
   editarAlbum,
   excluirAlbum,
   reordenarAlbums,
+  definirCapaAlbum,
   listarSlugs,
 } = require('../controllers/albumController');
 
@@ -24,6 +25,7 @@ router.get('/:slug', buscarAlbum);
 router.get('/admin/all', auth, listarAlbumsAdmin);
 router.post('/', auth, uploadSingle, criarAlbum);
 router.put('/:id', auth, uploadSingle, editarAlbum);
+router.patch('/:id/capa', auth, definirCapaAlbum);
 router.delete('/:id', auth, excluirAlbum);
 router.patch('/reorder', auth, reordenarAlbums);
 

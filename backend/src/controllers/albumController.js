@@ -218,6 +218,44 @@ async function reordenarAlbums(req, res) {
   }
 }
 
+/** PATCH /api/albums/:id/capa — Define uma capa a partir de uma foto existente */
+async function definirCapaAlbum(req, res) {
+  const { id } = req.params;
+  const { capa_url, capa_thumb, capa_cloudinary_id } = req.body;
+
+  if (!capa_url || !capa_thumb || !capa_cloudinary_id) {
+    return res.status(400).json({ success: false, error: 'Dados da capa incompletos.' });
+  }
+
+  try {
+    // Busca a capa antiga
+    const albumAtual = await query('SELECT capa_cloudinary_id FROM albums WHERE id = $1', [id]);
+    const capaAntiga = albumAtual.rows[0]?.capa_cloudinary_id;
+
+    if (capaAntiga && capaAntiga !== capa_cloudinary_id) {
+      // Verifica se a capa antiga pertence a alguma foto
+      const fotoRef = await query('SELECT id FROM fotos WHERE cloudinary_id = $1', [capaAntiga]);
+      if (fotoRef.rows.length === 0) {
+        // Nenhuma foto usa essa imagem, podemos deletar do Cloudinary
+        await deleteImage(capaAntiga);
+      }
+    }
+
+    const result = await query(
+      `UPDATE albums SET capa_url = $1, capa_thumb = $2, capa_cloudinary_id = $3, atualizado_em = NOW() WHERE id = $4 RETURNING *`,
+      [capa_url, capa_thumb, capa_cloudinary_id, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ success: false, error: 'Álbum não encontrado.' });
+    }
+    res.json({ success: true, data: result.rows[0], message: 'Capa atualizada com sucesso.' });
+  } catch (err) {
+    console.error('Erro ao definir capa:', err);
+    res.status(500).json({ success: false, error: 'Erro ao definir capa do álbum.' });
+  }
+}
+
 /** GET /api/albums/slugs — Retorna todos os slugs (para generateStaticParams do Next.js) */
 async function listarSlugs(req, res) {
   try {
@@ -236,5 +274,6 @@ module.exports = {
   editarAlbum,
   excluirAlbum,
   reordenarAlbums,
+  definirCapaAlbum,
   listarSlugs,
 };

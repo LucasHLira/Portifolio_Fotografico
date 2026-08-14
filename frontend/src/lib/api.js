@@ -48,6 +48,7 @@ export const albumsApi = {
   editar:       (id, data)   => api.put(`/albums/${id}`, data),
   excluir:      (id)         => api.delete(`/albums/${id}`),
   reordenar:    (ordem)      => api.patch('/albums/reorder', { ordem }),
+  definirCapa:  (id, data)   => api.patch(`/albums/${id}/capa`, data),
 };
 
 // ─── Fotos ───────────────────────────────────────────────────────────────────

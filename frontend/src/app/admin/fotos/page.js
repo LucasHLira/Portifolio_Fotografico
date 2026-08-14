@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { encerrarSessao } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { Trash2, MousePointerClick } from 'lucide-react';
+import { Trash2, MousePointerClick, Star } from 'lucide-react';
 
 
 
@@ -45,7 +45,25 @@ function FotosContent() {
       await fotosApi.excluir(foto.id);
       setFotos((prev) => prev.filter((f) => f.id !== foto.id));
       toast.success('Foto excluída.');
-    } catch { toast.error('Erro ao excluir foto.'); }
+    } catch (err) {
+      toast.error('Erro ao excluir foto.');
+      console.error(err);
+    }
+  };
+
+  const definirComoCapa = async (foto) => {
+    try {
+      const data = {
+        capa_url: foto.cloudinary_url,
+        capa_thumb: foto.thumbnail_url,
+        capa_cloudinary_id: foto.cloudinary_id
+      };
+      await albumsApi.definirCapa(albumSelecionado, data);
+      toast.success('Capa do álbum atualizada!');
+    } catch (err) {
+      toast.error('Erro ao definir capa.');
+      console.error(err);
+    }
   };
 
   return (
@@ -113,7 +131,15 @@ function FotosContent() {
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       loading="lazy"
                     />
-                    <div className="foto-admin-actions">
+                    <div className="foto-admin-actions" style={{ flexDirection: 'column', gap: '0.5rem' }}>
+                      <button
+                        onClick={() => definirComoCapa(foto)}
+                        className="btn"
+                        style={{ background: 'rgba(255,255,255,0.9)', color: '#0d1528', padding: '0.3rem 0.7rem', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+                        aria-label="Definir como Capa"
+                      >
+                        <Star size={14} fill="currentColor" /> Capa
+                      </button>
                       <button
                         onClick={() => excluirFoto(foto)}
                         className="btn"
