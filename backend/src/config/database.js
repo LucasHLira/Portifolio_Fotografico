@@ -9,7 +9,8 @@ const path = require('path');
 require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  // Corrige o warning de "SECURITY WARNING" gerado pelo driver pg substituindo sslmode
+  connectionString: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace('sslmode=require', 'sslmode=verify-full') : undefined,
   // Neon exige SSL para todas as conexões (mesmo local)
   ssl: { rejectUnauthorized: false },
   // Configurações de pool
